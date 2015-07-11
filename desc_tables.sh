@@ -10,12 +10,12 @@ DB=${4}
 
 exec 1> >(cat > "./${DB}.md")
 
-echo '# '${DB}
+echo "# ${DB}"
 for table in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show tables;" -N ${DB}`
 do
-  echo '## '${table}
+  echo "## ${table}"
 
-  # テーブル低ぢの出力
+  # テーブル定義の出力
   echo 'Field | Type | Collation | Null | Key | Default | Extra | Comment'
   echo '--- | --- | --- | --- | --- | --- | --- | ---'
 
