@@ -19,7 +19,7 @@ do
   echo 'Field | Type | Collation | Null | Key | Default | Extra | Comment'
   echo '--- | --- | --- | --- | --- | --- | --- | ---'
 
-  for line in `MYSQL_PWD=${PASSWORD} mysql -h${1} -u${2} -e "show full fields from ${table}" -N ${4}`
+  for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show full fields from ${table}" -N ${DB}`
   do
     field=`echo ${line} | cut -f1`
     type=`echo ${line} | cut -f2`
