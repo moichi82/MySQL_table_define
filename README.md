@@ -1,7 +1,7 @@
 MySQL_table_define
 ====
 
-Overview
+## Overview
 - MySQLのテーブル定義・インデックス情報をMarkdown形式で出力します。
 
 ## Description
@@ -14,6 +14,7 @@ show index from テーブル名
 - ExcelやHTMLの形式でテーブル定義を出力するスクリプトはネット上に落ちてましたが、Markdownでの出力が見つからなかったので、自分でシェル書きました。
 - 動作確認済みMySQLバージョン: 5.6.x
   - ほかのバージョンでは一切動作確認をしていないので、動作保証はありません。
+- Markdown形式で出力された文字列は、githubでは正しく表形式で表示されますが、Qiitaでは表が崩れて表示されます。
 
 ## Requirement
 - 依存関係はおそらくありません。
