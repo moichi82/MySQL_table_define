@@ -17,8 +17,8 @@ do
 
   # テーブル定義の出力
   echo '### Fields'
-  echo 'Field | Type | Collation | Null | Key | Default | Extra | Comment'
-  echo '--- | --- | --- | --- | --- | --- | --- | ---'
+  echo '| Field | Type | Collation | Null | Key | Default | Extra | Comment |'
+  echo '| --- | --- | --- | --- | --- | --- | --- | --- |'
 
   for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show full fields from ${table}" -N ${DB}`
   do
@@ -31,13 +31,13 @@ do
     extra=`echo ${line} | cut -f7`
     comment=`echo ${line} | cut -f9`
 
-    echo "${field} | ${type} | ${collation} | ${null} | ${key} | ${default} | ${extra} | ${comment}"
+    echo "| ${field} | ${type} | ${collation} | ${null} | ${key} | ${default} | ${extra} | ${comment} |"
   done
 
   # インデックス情報の出力
   echo '### Indexs'
-  echo 'Non_unique | Key_name | Seq_in_index | Column_name | Sub_part | Packed | Index_type | Comment | Index_comment'
-  echo '--- | --- | --- | --- | --- | --- | --- | --- | ---'
+  echo '| Non_unique | Key_name | Seq_in_index | Column_name | Sub_part | Packed | Index_type | Comment | Index_comment |'
+  echo '| --- | --- | --- | --- | --- | --- | --- | --- | --- |'
 
   for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show index from ${table}" -N ${DB}`
   do
@@ -51,7 +51,7 @@ do
     comment=`echo ${line} | cut -f12`
     index_comment=`echo ${line} | cut -f13`
 
-    echo "${non_unique} | ${key_name} | ${seq_in_index} | ${column_name} | ${sub_part} | ${packed} | ${index_type} | ${comment} | ${index_comment}"
+    echo "| ${non_unique} | ${key_name} | ${seq_in_index} | ${column_name} | ${sub_part} | ${packed} | ${index_type} | ${comment} | ${index_comment} |"
   done
 
   echo
