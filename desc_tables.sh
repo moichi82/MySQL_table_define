@@ -8,10 +8,22 @@ USER=${2}
 PASSWORD=${3}
 DB=${4}
 
-exec 1> >(cat > "./${DB}.md")
+if [ $# -ge 5 ]; then
+  PORT=${5}
+else
+  PORT=3306
+fi
+
+if [ $# -ge 6 ]; then
+  OUT=${6}
+else
+  OUT="./${DB}.md"
+fi
+
+exec 1> >(cat > $OUT)
 
 echo "# ${DB}"
-for table in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show tables;" -N ${DB}`
+for table in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -P ${PORT} -e "show tables;" -N ${DB}`
 do
   echo "## ${table}"
 
@@ -20,7 +32,7 @@ do
   echo '| Field | Type | Collation | Null | Key | Default | Extra | Comment |'
   echo '| --- | --- | --- | --- | --- | --- | --- | --- |'
 
-  for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show full fields from ${table}" -N ${DB}`
+  for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -P ${PORT} -e "show full fields from ${table}" -N ${DB}`
   do
     field=`echo ${line} | cut -f1`
     type=`echo ${line} | cut -f2`
@@ -39,7 +51,7 @@ do
   echo '| Non_unique | Key_name | Seq_in_index | Column_name | Sub_part | Packed | Index_type | Comment | Index_comment |'
   echo '| --- | --- | --- | --- | --- | --- | --- | --- | --- |'
 
-  for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -e "show index from ${table}" -N ${DB}`
+  for line in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -P ${PORT} -e "show index from ${table}" -N ${DB}`
   do
     non_unique=`echo ${line} | cut -f2`
     key_name=`echo ${line} | cut -f3`
