@@ -23,9 +23,11 @@ fi
 exec 1> >(cat > $OUT)
 
 echo "# ${DB}"
-for table in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -P ${PORT} -e "show tables;" -N ${DB}`
+for table_info in `MYSQL_PWD=${PASSWORD} mysql -h${HOST} -u${USER} -P ${PORT} -e "show table status;" -N ${DB}`
 do
-  echo "## ${table}"
+  table=`echo ${table_info} | cut -f1`
+  table_comment=`echo ${table_info} | cut -f18`
+  echo "## ${table} [${table_comment}]"
 
   # テーブル定義の出力
   echo '### Fields'
